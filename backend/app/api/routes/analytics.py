@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from app.db.session import get_db
 
+# router group for analytics endpoints
 router=APIRouter(prefix="/users",tags=["analytics"])
 
 @router.get("/{user_id}/analytics/completion")
@@ -27,3 +28,4 @@ def completion_rate(user_id:int,days:int=7,db:Session=Depends(get_db)):
 
     rows=db.execute(q,{"user_id":user_id,"days":days}).mappings().all()
     return {"user_id":user_id,"days":days,"results":list(rows)}
+  

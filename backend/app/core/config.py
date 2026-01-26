@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 
+# Load environment variables from a local .env file
+
 load_dotenv()
 
 DB_SERVER=os.getenv("DB_SERVER","")

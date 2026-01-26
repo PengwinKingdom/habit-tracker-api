@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from fastapi import HTTPException
 from datetime import datetime
 
+# router group for all habits endpoints
 router=APIRouter(prefix="/users",tags=["habits"])
 
 @router.get("/{user_id}/habits")
