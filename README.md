@@ -1,6 +1,6 @@
 # Habit Tracker (API + Streamlit Frontend)
 
-A simple habit tracking project with a REST API and a minimal Streamlit UI to create and track habits.
+A simple habit tracking project with a REST API and a minimal Streamlit UI to create and track habits
 
 
 ## Features
@@ -9,18 +9,9 @@ A simple habit tracking project with a REST API and a minimal Streamlit UI to cr
 - Basic validation and clean HTTP errors (404, 409)
 
 ## Tech Stack
-- Backend:
-  * FastAPI
-  * Flask
-  * Node
-    
-- Frontend:
-  * Streamlit
-    
-- Storage:
-  * SQL
-  * JSON
-  * in-memory
+- Backend: FastAPI
+- Frontend: Streamlit
+- Storage: SQLite (local database)
 
 ## Run locally
 
@@ -54,11 +45,14 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+Backend URL: http://localhost:8000  
+API Docs (Swagger): http://localhost:8000/docs
+
 
 ### 3) Frontend (Streamlit)
 
 ```bash
-cd frontend
+cd ../frontend
 python -m venv .venv
 ```
 
@@ -75,3 +69,19 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python -m streamlit run app.py
 ```
+
+Frontend URL: http://localhost:8501
+
+
+## API Endpoints (main)
+| Method | Endpoint | Description |
+|-------:|----------|-------------|
+| GET    | /habits  | List habits |
+| POST   | /habits  | Create habit |
+| GET    | /habits/{id} | Get habit by id |
+| PUT/PATCH | /habits/{id} | Update habit |
+
+
+## Error Codes
+- `404 Not Found` → habit not found
+- `409 Conflict` → duplicated resource / invalid state
