@@ -1,0 +1,67 @@
+:root {
+  /* Primary */
+  --primary: #7C3AED;
+  --primary-hover: #6D28D9;
+  --primary-bg: #F5F3FF;
+
+  /* Neutral scale */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Semantic colors */
+  --color-success: #16a34a;
+  --color-success-light: #dcfce7;
+  --color-warning: #d97706;
+  --color-warning-light: #fef3c7;
+  --color-danger: #380d7d;
+  --color-danger-light: #fee2e2;
+  --color-info: #0284c7;
+  --color-info-light: #e0f2fe;
+
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--color-gray-50);
+  --bg-tertiary: var(--color-gray-100);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Semantic tokens */
+  --text: var(--color-gray-900);
+  --muted: var(--color-gray-500);
+  --muted-2: var(--color-gray-400);
+  --border: var(--color-gray-200);
+  --card-bg: var(--bg-primary);
+
+  --success-bg: var(--color-success-light);
+  --success-text: #166534;
+
+  --danger-bg: var(--color-danger-light);
+  --danger-text: #380d7d;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+
+    --text: #F9FAFB;
+    --muted: #D1D5DB;
+    --muted-2: #9CA3AF;
+
+    --border: #374151;
+    --card-bg: #111827;
+  }
+}

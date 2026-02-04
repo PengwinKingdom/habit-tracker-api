@@ -1,0 +1,42 @@
+
+.today-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.today-date-selector {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.today-habit-container {
+    margin-bottom: 1.5rem;
+    border-left: 4px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.today-habit-container:hover {
+    border-left-color: #2563eb;
+}
+
+.completion-checkbox {
+    font-size: 1.1rem;
+}
+
+.habit-notes-input {
+    width: 100%;
+    min-height: 60px;
+}
+
+.save-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+}
+
+.completed-indicator {
+    color: #16a34a;
+    font-weight: 600;
+}

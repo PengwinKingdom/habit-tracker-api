@@ -1,0 +1,118 @@
+
+.stButton>button {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.stButton>button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stButton>button:active {
+    transform: translateY(0);
+}
+
+/* Button variants */
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6b7280;
+    color: white;
+}
+
+.btn-success {
+    background-color: #16a34a;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid #2563eb;
+    color: #2563eb;
+}
+
+/* Button sizes */
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-large {
+    padding: 0.875rem 1.5rem;
+    font-size: 1.125rem;
+}
+
+
+/* =========================
+   Botón Primary: morado + texto blanco
+   ========================= */
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+  background: #380d7d !important;
+  border-color: #380d7d !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+  background: #2f0a66 !important; 
+  border-color: #2f0a66 !important;
+  color: #ffffff !important;
+}
+
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"] * {
+  color: #ffffff !important;
+}
+
+/* =========================
+   Sidebar buttons: quitar focus rojo -> morado
+   ========================= */
+
+/* Botones del sidebar  */
+[data-testid="stSidebar"] .stButton > button {
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  background: var(--card-bg) !important;
+  border-radius: 12px !important;
+}
+
+/* Hover */
+[data-testid="stSidebar"] .stButton > button:hover {
+  border-color: var(--primary) !important;
+  background: var(--primary-bg) !important;
+}
+
+/* Focus  */
+[data-testid="stSidebar"] .stButton > button:focus,
+[data-testid="stSidebar"] .stButton > button:focus-visible {
+  border-color: #380d7d !important;
+  color: var(--text) !important; 
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25) !important;
+  outline: none !important;
+}
+
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+/* Hover del primary */
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+  background: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}

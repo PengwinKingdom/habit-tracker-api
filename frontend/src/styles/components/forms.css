@@ -1,0 +1,169 @@
+
+.stTextInput>div>div>input,
+.stTextArea>div>div>textarea,
+.stNumberInput>div>div>input,
+.stSelectbox>div>div>select {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    transition: border-color 0.2s ease;
+}
+
+.stTextInput>div>div>input:focus,
+.stTextArea>div>div>textarea:focus,
+.stNumberInput>div>div>input:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Input groups */
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Labels */
+label {
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Checkbox customization */
+.stCheckbox {
+    margin: 0.5rem 0;
+}
+
+.stCheckbox > label {
+    font-size: 1rem;
+    color: #374151;
+}
+
+/* Date input */
+.stDateInput>div>div>input {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+}
+
+
+.st-cp, .st-co, .st-cn, .st-cm {
+  border-color: #380d7d !important;
+}
+
+
+.st-cp { border-bottom-color: #380d7d !important; }
+.st-co { border-top-color: #380d7d !important; }
+.st-cn { border-right-color: #380d7d !important; }
+.st-cm { border-left-color: #380d7d !important; }
+
+
+[data-testid="stSelectbox"] div[role="combobox"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+/* hover suave */
+[data-testid="stSelectbox"] div[role="combobox"]:hover {
+  border-color: var(--color-gray-300) !important;
+}
+
+/* focus morado */
+[data-testid="stSelectbox"] div[role="combobox"]:focus-within {
+  border-color: #380d7d !important;
+  box-shadow: 0 0 0 3px rgba(56, 13, 125, 0.15) !important;
+}
+
+/* =========================
+   Checkbox: usar morado
+   ========================= */
+
+
+[data-testid="stCheckbox"] input[type="checkbox"]:checked {
+  accent-color: #380d7d !important;  
+}
+
+
+[data-testid="stCheckbox"] input[type="checkbox"] {
+  accent-color: #380d7d !important;
+}
+
+
+
+
+
+/* =========================
+   NumberInput step buttons (+ / -)
+   ========================= */
+
+/* Aplica solo dentro del sidebar */
+[data-testid="stSidebar"] [data-testid="stNumberInput"] button {
+  background: rgba(124, 58, 237, 0.10) !important;  
+  border: 1px solid rgba(124, 58, 237, 0.25) !important;
+  color: #380d7d !important;
+  box-shadow: none !important;
+}
+
+/* Hover */
+[data-testid="stSidebar"] [data-testid="stNumberInput"] button:hover {
+  background: rgba(124, 58, 237, 0.18) !important;
+  border-color: rgba(124, 58, 237, 0.35) !important;
+  color: #380d7d !important;
+}
+
+/* Focus */
+[data-testid="stSidebar"] [data-testid="stNumberInput"] button:focus,
+[data-testid="stSidebar"] [data-testid="stNumberInput"] button:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25) !important; 
+}
+
+
+/* =========================
+   NumberInput: borde rojo en focus -> morado
+   ========================= */
+
+[data-testid="stNumberInput"] div.focused {
+  border-color: #380d7d !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.20) !important; 
+}
+
+
+[data-testid="stNumberInput"] input:focus {
+  border-color: #380d7d !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.20) !important;
+  outline: none !important;
+}
+
+/* =========================
+   Flecha (SVG) en expanders 
+   ========================= */
+
+summary:hover,
+summary:focus,
+summary:focus-visible {
+  color: var(--primary) !important; 
+}
+
+summary svg,
+summary:hover svg,
+summary:focus svg,
+summary:focus-visible svg {
+  color: var(--primary) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+[data-testid="stExpander"] summary:hover,
+[data-testid="stExpander"] summary:focus,
+[data-testid="stExpander"] summary:focus-visible {
+  color: var(--primary) !important;
+}
+
+[data-testid="stExpander"] summary svg {
+  color: var(--primary) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}

@@ -1,0 +1,93 @@
+/* =========================
+   Sidebar base
+   ========================= */
+
+[data-testid="stSidebar"] {
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+}
+
+[data-testid="stSidebar"] .block-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Sidebar headers */
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+/* Sidebar sections */
+.sidebar-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm); 
+}
+
+/* =========================
+   Connection status 
+   ========================= */
+
+.connection-status {
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+
+/* conectado */
+.connection-status.connected {
+  background: var(--success-bg);
+  color: var(--success-text); 
+}
+
+/* desconectado -> warning suave*/
+.connection-status.disconnected {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-color: rgba(124, 58, 237, 0.25);
+}
+
+/* =========================
+   Navigation buttons
+   ========================= */
+
+[data-testid="stSidebar"] .stButton > button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: var(--text);
+  box-shadow: none;
+}
+
+/* hover suave */
+[data-testid="stSidebar"] .stButton > button:hover {
+  background: var(--primary-bg);
+  border-color: rgba(124, 58, 237, 0.25);
+  color: var(--primary);
+}
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+  background: var(--primary) !important;
+  color: white !important;
+  border-color: var(--primary) !important;
+}
+
+/* hover del activo */
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+  background: var(--primary-hover) !important; 
+  border-color: var(--primary-hover) !important;
+}
