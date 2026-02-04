@@ -76,7 +76,7 @@ def upsert_log(
                 text(""" 
                      UPDATE dbo.HabitLogs
                      SET Completed = :completed,
-                      NOTES =: notes
+                      NOTES = :notes
                     WHERE HabitId = :habit_id AND LogDate = :log_date
                     """),
                 
@@ -131,5 +131,24 @@ def list_logs(habit_id:int,days:int=30,db:Session=Depends(get_db)):
             AND LogDate >= DATEADD(DAY, -( :days -1), CAST(GETDATE() AS DATE))
            ORDER BY LogDate DESC
            """)
+
+    try:
+        result=db.execute(q,{"habit_id":habit_id,"days":days})
+        rows=result.fetchall()
+
+        logs=[]
+        for r in rows:
+            logs.append({
+                "LogId":r.HabitLogId,
+                "HabitId":r.HabitId,
+                "LogDate":r.LogDate.isoformat() if r.LogDate else None,
+                "Completed":bool(r.Completed),
+                "Notes":r.Notes or "",
+                "CreatedAt":r.CreatedAt.isoformat() if r.CreatedAt else None
+            })
+
+        return logs
+
+    except Exception as e:
+        raise HTTPException(status_code=500,detail=str(e))
     
-    rows=db.execute(q,{"habit_id":habit_id,"days":days,"logs":list(rows)})
