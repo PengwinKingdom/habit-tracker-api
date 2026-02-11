@@ -36,3 +36,4 @@ def create_habit(user_id:int,payload:HabitCreate,db:Session=Depends(get_db)):
   if not row:
     raise HTTPException(status_code=500,detail="Failed to create habit")
   return row
+

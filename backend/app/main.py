@@ -3,6 +3,7 @@ from app.api.routes.habits import router as habits_router
 from app.api.routes.logs import router as logs_router
 from app.api.routes.analytics import router as analytics_router
 from app.api.routes.users import router as users_router
+from app.api.routes.routers.insights import router as insights_router
 
 # create the FastAPI application instance
 app=FastAPI(title='Habit Tracker API')
@@ -12,6 +13,7 @@ app.include_router(habits_router)
 app.include_router(logs_router)
 app.include_router(analytics_router)
 app.include_router(users_router)
+app.include_router(insights_router)
 
 @app.get("/health")
 def health():
