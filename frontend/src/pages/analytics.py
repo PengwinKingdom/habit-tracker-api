@@ -4,55 +4,54 @@ import plotly.express as px
 from ..utils.state import get_api_client
 
 def render_analytics_page():
-    """Renderizar la página de Analytics"""
-    st.title("Analytics e Insights")
+    """Render the Analytics page"""
+    st.title("Analytics and Insights")
     
     if not st.session_state.user_id:
-        st.warning("⚠️ Por favor configura tu User ID en la barra lateral.")
+        st.warning("⚠️ Please set your User ID in the sidebar")
         return
     
     api = get_api_client()
     
-    # Selector de período
     col1, col2 = st.columns([2, 4])
     with col1:
         days = st.selectbox(
-            "Período de Tiempo",
+            "Time period",
             options=[7, 30],
-            format_func=lambda x: f"Últimos {x} días"
+            format_func=lambda x: f"Last {x} days"
         )
     
     st.divider()
     
-    # Obtener datos de analytics
+    # Get analytics data
     analytics = api.get_analytics(st.session_state.user_id, days)
     
     if not analytics:
-        st.info("ℹNo hay datos disponibles aún. ¡Comienza a registrar tus hábitos!")
+        st.info("ℹNo data available yet. Start tracking your habits now!")
         return
     
-    # Preparar DataFrame
+    # Prepare DataFrame
     results = analytics.get("results", []) if isinstance(analytics, dict) else analytics
     
     if not results:
-        st.info("ℹNo hay resultados para este período.")
+        st.info("There are no results for this period")
         return
 
     df = pd.DataFrame(results)
 
 
     if df.empty:
-        st.info("ℹNo hay datos de analytics para este período.")
+        st.info("There are no results for this period")
         return
 
     df["habit_title"] = df.get("habit_title", df.get("Title"))
     df["completion_rate"] = df.get("completion_rate", df.get("CompletionRate"))
 
-    # convertir a número por seguridad
+    # convert to number for security
     df["completion_rate"] = pd.to_numeric(df["completion_rate"], errors="coerce").fillna(0.0)
     
-    # Métricas de resumen
-    st.subheader("Tasas de Completitud")
+
+    st.subheader("Completion Rates")
     
     cols = st.columns(min(len(df), 4))
     for idx, row in df.iterrows():
@@ -66,13 +65,13 @@ def render_analytics_page():
     
     st.divider()
     
-    # Tabla detallada
-    st.subheader("Desglose Detallado")
+    # Detailed table
+    st.subheader("Detailed Breakdown")
     
     display_df = df[['habit_title', 'completion_rate']].copy()
-    display_df.columns = ['Hábito', 'Tasa (%)']
+    display_df.columns = ['Habit', 'Rate (%)']
 
-    display_df['Tasa (%)'] = display_df['Tasa (%)'].round(1)
+    display_df['Rate (%)'] = display_df['Rate (%)'].round(1)
     
     st.dataframe(
         display_df,
@@ -82,15 +81,15 @@ def render_analytics_page():
     
     st.divider()
     
-    # Visualización
-    st.subheader("Progreso Visual")
+    # Visualization
+    st.subheader("Visual Progress")
     
-    # Gráfico de barras
+    # Bar chart
     fig = px.bar(
         df,
         x='habit_title',
         y='completion_rate',
-        labels={'habit_title': 'Hábito', 'completion_rate': 'Tasa de Completitud (%)'},
+        labels={'habit_title': 'Habit', 'completion_rate': 'Completion Rate (%)'},
         color='completion_rate',
         color_continuous_scale='Blues',
         text='completion_rate'
@@ -101,7 +100,7 @@ def render_analytics_page():
         showlegend=False,
         height=400,
         xaxis_title="",
-        yaxis_title="Tasa de Completitud (%)",
+        yaxis_title="Completion Rate (%)",
         yaxis_range=[0, 105]
     )
     

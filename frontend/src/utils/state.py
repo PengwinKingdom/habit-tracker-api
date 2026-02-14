@@ -5,7 +5,7 @@ def initialize_session_state():
     if 'user_id' not in st.session_state:
         st.session_state.user_id = None
     if 'api_base_url' not in st.session_state:
-        st.session_state.api_base_url = "http://127.0.0.1:8000"
+        st.session_state.api_base_url = st.secrets.get("API_BASE_URL", "http://127.0.0.1:8000")
     if 'page' not in st.session_state:
         st.session_state.page = "Habits"
 

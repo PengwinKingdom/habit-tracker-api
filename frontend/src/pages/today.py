@@ -4,34 +4,34 @@ from ..utils.state import get_api_client
 from ..utils.dates import format_date
 
 def render_today_page():
-    """Renderizar la página de Seguimiento Diario"""
-    st.title("Seguimiento de Hoy")
+    """Render the Daily Tracking page"""
+    st.title("Today's Follow-up")
     
     if not st.session_state.user_id:
-        st.warning("⚠️ Por favor configura tu User ID en la barra lateral.")
+        st.warning("⚠️ Please set your User ID in the sidebar")
         return
     
     api = get_api_client()
     
-    # Selector de fecha
+    # Select Date
     selected_date = st.date_input(
-        "Seleccionar Fecha",
+        "Select Date",
         value=date.today(),
         max_value=date.today(),
-        help="Puedes registrar hábitos de días anteriores"
+        help="You can record habits from previous days"
     )
     
     st.divider()
     
-    # Obtener hábitos activos
+    # Get active habits
     habits = api.get_habits(st.session_state.user_id)
     active_habits = [h for h in (habits or []) if h.get('is_active', True)]
     
     if not active_habits:
-        st.info("ℹ️ No tienes hábitos activos. Ve a la página de Hábitos para crear uno.")
+        st.info("ℹ️ You don't have any active habits. Go to the Habits page to create one")
         return
     
-    st.subheader(f"Hábitos Activos ({len(active_habits)})")
+    st.subheader(f"Active habits ({len(active_habits)})")
     
     log_date = format_date(selected_date)
 
@@ -54,7 +54,7 @@ def render_today_page():
         if found:
             logs_by_habit[hid] = found
 
-    # Seguimiento de cada hábito
+    # Tracking each habit
     for habit in active_habits:
         habit_id = habit.get("id") or habit.get("HabitId") 
 
@@ -78,26 +78,26 @@ def render_today_page():
             
             with col1:
                 completed = st.checkbox(
-                    "✓ Completado",
+                    "✓ Completed",
                     key=f"completed_{habit_id}_{log_date}", 
                     value=default_completed  
                 )
             
             with col2:
                 notes = st.text_input(
-                    "Notas (opcional)",
+                    "Notes (optional)",
                     key=f"notes_{habit_id}_{log_date}",
                     value=default_notes, 
-                    placeholder="Pensamientos o reflexiones...",
+                    placeholder="Thoughts or reflections...",
                     label_visibility="collapsed"
                 )
             
             with col3:
-                if st.button("💾 Guardar", key=f"save_{habit_id}", use_container_width=True):
+                if st.button("💾 Save", key=f"save_{habit_id}", use_container_width=True):
                     log_date = format_date(selected_date)
                     result = api.upsert_log(habit_id, log_date, completed, notes)
 
                     if result is not None:
-                        st.success("✅ ¡Guardado!")
+                        st.success("✅ Saved!")
                         st.rerun()
             
