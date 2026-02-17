@@ -66,7 +66,7 @@ class HabitTrackerAPI:
     
 
     def create_habit(self, user_id: int, title: str, description: str):
-        """Crear un nuevo hábito"""
+        """Create a new habit"""
         return self._make_request("POST", f"/users/{user_id}/habits", json={
             "title": title,
             "description": description
@@ -102,3 +102,16 @@ class HabitTrackerAPI:
             f"/habits/{habit_id}/logs/{log_date}",
             json={"completed":completed,"notes":notes}
         )
+
+
+    def get_user(self,user_id:int) -> Optional[Dict]:
+        return self._make_request("GET", f"/users/{user_id}")
+
+    def create_user(self, full_name: str, email: str):
+        return self._make_request("POST", "/users", json={
+            "full_name": full_name,
+            "email": email
+            })
+
+    def list_users(self,limit:int = 50):
+        return self._make_request("GET", f"/users?limit={limit}")

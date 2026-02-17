@@ -16,39 +16,86 @@ st.set_page_config(
 )
 
 initialize_session_state()
-
 load_all_styles()
 
 # ==================== SIDEBAR ====================
 with st.sidebar:
-    st.title("Configuration")
-    
-    # User ID
-    user_id_input = st.number_input(
-        "User ID",
-        min_value=1,
-        value=st.session_state.user_id if st.session_state.user_id else 1,
-        help="Ingresa tu ID de usuario"
-    )
-    
-    # API Base URL
+    st.title("Settings")
+
+    api = get_api_client()
+
+    # ---------------- Active user (dropdown) ----------------
+    st.subheader("Active user")
+
+    users_data = api.list_users(limit=50) or {"items": []}
+    users = users_data.get("items", [])
+
+    options = []
+    id_map = {}
+
+    for u in users:
+        uid = u["UserId"]
+        label = f"{uid} — {u['FullName']} ({u['Email']})"
+        options.append(label)
+        id_map[label] = uid
+
+    selected_user_id = None
+    if options:
+        default_index = 0
+        if st.session_state.user_id:
+            for i, opt in enumerate(options):
+                if id_map[opt] == st.session_state.user_id:
+                    default_index = i
+                    break
+
+        selected = st.selectbox("Select a user", options, index=default_index)
+        selected_user_id = id_map[selected]
+        st.success("✓ User exists")
+    else:
+        st.info("No users yet. Create one below.")
+
+    # ---------------- API Base URL ----------------
     api_url_input = st.text_input(
         "API Base URL",
         value=st.session_state.api_base_url,
-        help="Endpoint del backend API"
+        help="Backend API base URL"
     )
-    
-    if st.button("Safe Configuration", use_container_width=True):
-        st.session_state.user_id = user_id_input
-        st.session_state.api_base_url = api_url_input.rstrip('/')
-        st.success("Configuration guardada!")
-        st.rerun()
-    
+
+    if st.button("Set active user", use_container_width=True):
+        if selected_user_id is None:
+            st.error("Create a user first.")
+        else:
+            st.session_state.user_id = selected_user_id
+            st.session_state.api_base_url = api_url_input.rstrip("/")
+            st.success("Active user updated ✅")
+            st.rerun()
+
     st.divider()
-    
-    # navigation
+
+    # ---------------- Create user ----------------
+    st.subheader("Create user")
+    full_name = st.text_input("Full name", value="")
+    email = st.text_input("Email", value="")
+
+    if st.button("Create User", use_container_width=True):
+        if not full_name.strip() or not email.strip():
+            st.error("Full name and email are required.")
+        else:
+            created = api.create_user(full_name=full_name.strip(), email=email.strip())
+            if created:
+                new_id = created.get("UserId") or created.get("user_id") or created.get("id")
+                if new_id:
+                    st.session_state.user_id = int(new_id)
+                    st.success(f"User created ✅ (User ID: {new_id})")
+                    st.rerun()
+                else:
+                    st.warning("User created, but could not read the new user ID.")
+
+    st.divider()
+
+    # ---------------- Navigation ----------------
     st.subheader("📍 Navigation")
-    
+
     if st.button(
         "Habits",
         use_container_width=True,
@@ -56,7 +103,7 @@ with st.sidebar:
     ):
         st.session_state.page = "Habits"
         st.rerun()
-    
+
     if st.button(
         "Today",
         use_container_width=True,
@@ -64,7 +111,7 @@ with st.sidebar:
     ):
         st.session_state.page = "Today"
         st.rerun()
-    
+
     if st.button(
         "Analytics",
         use_container_width=True,
@@ -72,29 +119,26 @@ with st.sidebar:
     ):
         st.session_state.page = "Analytics"
         st.rerun()
-    
+
     if st.button(
         "Weekly Reports",
         use_container_width=True,
         type="primary" if st.session_state.page == "Weekly Reports" else "secondary"
     ):
-      st.session_state.page = "Weekly Reports"
-      st.rerun()
+        st.session_state.page = "Weekly Reports"
+        st.rerun()
 
     st.divider()
-    
 
+    # ---------------- Connection status ----------------
     if st.session_state.user_id:
-        st.success(f"✓ User ID: {st.session_state.user_id}")
-        
-        # Health check
-        api = get_api_client()
+        st.success(f"✓ Active User ID: {st.session_state.user_id}")
         if api.health_check():
-            st.success("✓ Backend conectado")
+            st.success("✓ Backend connected")
         else:
-            st.error("✗ Backend no disponible")
+            st.error("✗ Backend not available")
     else:
-        st.warning("⚠ Configura tu User ID")
+        st.warning("⚠ Select or create a user")
 
 # ==================== MAIN CONTENT ====================
 if st.session_state.page == "Habits":

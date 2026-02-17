@@ -44,3 +44,17 @@ def get_user(user_id:int,db:Session=Depends(get_db)):
     if not row:
         raise HTTPException(status_code=404,detail="User not found")
     return row
+
+
+@router.get("")
+def list_users(limit: int = 50, db: Session = Depends(get_db)):
+    q = text(""" 
+    SELECT TOP (:limit)
+     UserId,FullName,Email,CreatedAt
+    FROM dbo.Users
+    ORDER BY UserId DESC;
+    """)
+
+    rows = db.execute(q, {"limit": limit}).mappings().all()
+    return {"items":list(rows)}
+    

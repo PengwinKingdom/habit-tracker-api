@@ -10,6 +10,12 @@ def render_habits_page():
         return
     
     api = get_api_client()
+
+    # Validate user exists
+    user = api.get_user(st.session_state.user_id)
+    if user is None:
+        st.error("User ID does not exist. Create a user first in the sidebar")
+        return
     
     # Section: Add new habit
     with st.expander("Add new habit", expanded=False):
@@ -23,7 +29,7 @@ def render_habits_page():
                 height=100
             )
             
-            col1, col2 = st.columns([1, 5])
+            col1, _ = st.columns([1, 5])
             with col1:
                 submitted = st.form_submit_button("Create", use_container_width=True)
             
@@ -43,12 +49,12 @@ def render_habits_page():
     st.divider()
     
     # Listar hábitos existentes
-    habits = api.get_habits(st.session_state.user_id)
+    with st.spinner("Loading habits..."):
+        habits = api.get_habits(st.session_state.user_id)
     
     if habits:
         st.subheader(f"Total Habits: {len(habits)}")
-        
         for habit in habits:
             render_habit_card(habit)
     else:
-        st.info("ℹYou don't have any habits yet. Create your first habit above!")
+        st.info("ℹ️ You don't have any habits yet. Create your first habit above!")
